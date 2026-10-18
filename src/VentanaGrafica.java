@@ -26,13 +26,11 @@ public class VentanaGrafica extends JFrame {
 
         lista = new Llista();
 
-        // CONFIGURACION DE LA VENTANA
         setTitle("Gestión de Transportes");
         setSize(1100, 650);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        // PANEL PRINCIPAL
         JPanel panelPrincipal = new JPanel(
                 new BorderLayout(5, 5)
         );
@@ -53,7 +51,6 @@ public class VentanaGrafica extends JFrame {
         tituloMenu.setFont(new Font("Arial", Font.BOLD, 20));
         tituloMenu.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // BOTONES DEL MENU
         JButton botonRegistrar =
                 new JButton("Registrar vehículo");
 
@@ -69,7 +66,6 @@ public class VentanaGrafica extends JFrame {
         JButton botonMostrarTodos =
                 new JButton("Mostrar todos");
 
-        // TAMAÑO UNIFORME
         Dimension tamañoBoton = new Dimension(230, 65);
 
         JButton[] botones = {
@@ -91,59 +87,46 @@ public class VentanaGrafica extends JFrame {
             boton.setFocusPainted(false);
         }
 
-        // AÑADIR BOTONES
         panelMenu.add(Box.createVerticalStrut(25));
         panelMenu.add(tituloMenu);
         panelMenu.add(Box.createVerticalStrut(30));
 
-        panelMenu.add(botonRegistrar);
-        panelMenu.add(Box.createVerticalStrut(15));
-
-        panelMenu.add(botonEliminar);
-        panelMenu.add(Box.createVerticalStrut(15));
-
-        panelMenu.add(botonBuscarNombre);
-        panelMenu.add(Box.createVerticalStrut(15));
-
-        panelMenu.add(botonBuscarPropietario);
-        panelMenu.add(Box.createVerticalStrut(15));
-
-        panelMenu.add(botonMostrarTodos);
+        for (JButton boton : botones) {
+            panelMenu.add(boton);
+            panelMenu.add(Box.createVerticalStrut(15));
+        }
 
         // =====================================
         // PANEL CENTRAL: INTERACCION
         // =====================================
 
         gestorPaneles = new CardLayout();
+
         panelInteraccion = new JPanel(gestorPaneles);
         panelInteraccion.setBackground(Color.WHITE);
 
-        // PANTALLA INICIAL
         panelInteraccion.add(
                 crearPanelTemporal("Selecciona una opción del menú"),
                 "inicio"
         );
 
-        // REGISTRAR
         panelInteraccion.add(
                 crearPanelRegistrar(),
                 "registrar"
         );
 
-        // ELIMINAR
         panelInteraccion.add(
                 crearPanelEliminar(),
                 "eliminar"
         );
 
-        // BUSQUEDAS PENDIENTES
         panelInteraccion.add(
-                crearPanelTemporal("Buscar por nombre"),
+                crearPanelBuscarNombre(),
                 "nombre"
         );
 
         panelInteraccion.add(
-                crearPanelTemporal("Buscar por propietario"),
+                crearPanelBuscarPropietario(),
                 "propietario"
         );
 
@@ -180,6 +163,7 @@ public class VentanaGrafica extends JFrame {
 
         areaResultados = new JTextArea();
         areaResultados.setEditable(false);
+
         areaResultados.setFont(
                 new Font("Monospaced", Font.PLAIN, 13)
         );
@@ -201,7 +185,7 @@ public class VentanaGrafica extends JFrame {
         );
 
         // =====================================
-        // ACCIONES DE LOS BOTONES DEL MENU
+        // ACCIONES DE LOS BOTONES
         // =====================================
 
         botonRegistrar.addActionListener(e ->
@@ -220,10 +204,9 @@ public class VentanaGrafica extends JFrame {
                 gestorPaneles.show(panelInteraccion, "propietario")
         );
 
-        botonMostrarTodos.addActionListener(e -> {
-            areaResultados.setText(lista.imprimirTodos());
-            areaResultados.setCaretPosition(0);
-        });
+        botonMostrarTodos.addActionListener(e ->
+                mostrarVehiculos(lista.obtenerTodos())
+        );
 
         // =====================================
         // AÑADIR LOS TRES PANELES
@@ -237,7 +220,7 @@ public class VentanaGrafica extends JFrame {
     }
 
     // =====================================
-    // PANELES TEMPORALES
+    // PANEL TEMPORAL
     // =====================================
 
     private JPanel crearPanelTemporal(String titulo) {
@@ -249,9 +232,7 @@ public class VentanaGrafica extends JFrame {
                 titulo, SwingConstants.CENTER
         );
 
-        etiqueta.setFont(
-                new Font("Arial", Font.BOLD, 22)
-        );
+        etiqueta.setFont(new Font("Arial", Font.BOLD, 18));
 
         panel.add(etiqueta, BorderLayout.CENTER);
 
@@ -259,7 +240,34 @@ public class VentanaGrafica extends JFrame {
     }
 
     // =====================================
-    // FORMULARIO PARA REGISTRAR VEHICULOS
+    // MOSTRAR VEHICULOS EN EL PANEL DERECHO
+    // =====================================
+
+    private void mostrarVehiculos(Transport[] vehiculos) {
+
+        areaResultados.setText("");
+
+        if (vehiculos.length == 0) {
+            areaResultados.setText(
+                    "No se encontraron vehículos."
+            );
+            return;
+        }
+
+        for (Transport vehiculo : vehiculos) {
+
+            areaResultados.append(vehiculo.toString());
+
+            areaResultados.append(
+                    "\n--------------------------\n\n"
+            );
+        }
+
+        areaResultados.setCaretPosition(0);
+    }
+
+    // =====================================
+    // FORMULARIO DE REGISTRO
     // =====================================
 
     private JPanel crearPanelRegistrar() {
@@ -274,7 +282,6 @@ public class VentanaGrafica extends JFrame {
                 BorderFactory.createEmptyBorder(12, 10, 12, 10)
         );
 
-        // CAMPOS DE TEXTO
         JTextField campoNombre = new JTextField();
         JTextField campoPropietario = new JTextField();
         JTextField campoMatricula = new JTextField();
@@ -284,13 +291,11 @@ public class VentanaGrafica extends JFrame {
         JTextField campoCilindrada = new JTextField();
         JTextField campoCombustible = new JTextField();
 
-        // RESTRICCIONES DE ENTRADA
         limitarCampo(campoMatricula, 7, false);
         limitarCampo(campoVelocidad, 5, true);
         limitarCampo(campoPlazas, 3, true);
         limitarCampo(campoCilindrada, 6, true);
 
-        // SELECTORES
         JComboBox<String> selectorTipo = new JComboBox<>(
                 new String[]{"Terrestre", "Marítimo", "Aéreo"}
         );
@@ -299,7 +304,6 @@ public class VentanaGrafica extends JFrame {
                 new String[]{"Mecánica", "No mecánica"}
         );
 
-        // CAMPOS DEL FORMULARIO
         panel.add(new JLabel("Nombre del vehículo:"));
         panel.add(campoNombre);
 
@@ -324,7 +328,6 @@ public class VentanaGrafica extends JFrame {
         panel.add(new JLabel("Medio de circulación:"));
         panel.add(campoMedio);
 
-        // DATOS DEL MOTOR
         JLabel etiquetaCilindrada =
                 new JLabel("Cilindrada:");
 
@@ -353,7 +356,6 @@ public class VentanaGrafica extends JFrame {
             panel.repaint();
         });
 
-        // BOTON REGISTRAR
         JButton botonGuardar =
                 new JButton("Registrar vehículo");
 
@@ -373,7 +375,6 @@ public class VentanaGrafica extends JFrame {
                 selectorTraccion
         ));
 
-        // CONTENEDOR
         JScrollPane scroll = new JScrollPane(panel);
 
         scroll.setHorizontalScrollBarPolicy(
@@ -389,7 +390,7 @@ public class VentanaGrafica extends JFrame {
     }
 
     // =====================================
-    // REGISTRAR UN VEHICULO
+    // REGISTRAR VEHICULO EN LA LISTA
     // =====================================
 
     private void registrarVehiculo(
@@ -415,7 +416,6 @@ public class VentanaGrafica extends JFrame {
         boolean mecanica =
                 selectorTraccion.getSelectedIndex() == 0;
 
-        // COMPROBAR CAMPOS OBLIGATORIOS
         if (nombre.isEmpty()
                 || propietario.isEmpty()
                 || matricula.isEmpty()
@@ -430,7 +430,6 @@ public class VentanaGrafica extends JFrame {
             return;
         }
 
-        // COMPROBAR CAMPOS DEL MOTOR
         if (mecanica && (
                 campoCilindrada.getText().trim().isEmpty()
                         || campoCombustible.getText().trim().isEmpty())) {
@@ -461,7 +460,6 @@ public class VentanaGrafica extends JFrame {
                 return;
             }
 
-            // CREAR MOTOR
             Motor motor = null;
 
             if (mecanica) {
@@ -485,7 +483,6 @@ public class VentanaGrafica extends JFrame {
                 );
             }
 
-            // CREAR EL VEHICULO CORRESPONDIENTE
             Transport vehiculo;
 
             if (tipo.equals("Terrestre")) {
@@ -531,7 +528,6 @@ public class VentanaGrafica extends JFrame {
                 }
             }
 
-            // INSERTAR EN LA LISTA ENLAZADA
             lista.insertar(vehiculo);
 
             JOptionPane.showMessageDialog(
@@ -539,7 +535,10 @@ public class VentanaGrafica extends JFrame {
                     "Vehículo registrado correctamente."
             );
 
-            // LIMPIAR FORMULARIO
+            // ACTUALIZAR RESULTADOS
+            mostrarVehiculos(lista.obtenerTodos());
+
+            // LIMPIAR CAMPOS
             campoNombre.setText("");
             campoPropietario.setText("");
             campoMatricula.setText("");
@@ -559,7 +558,7 @@ public class VentanaGrafica extends JFrame {
     }
 
     // =====================================
-    // FORMULARIO PARA ELIMINAR VEHICULOS
+    // FORMULARIO DE ELIMINACION
     // =====================================
 
     private JPanel crearPanelEliminar() {
@@ -569,37 +568,28 @@ public class VentanaGrafica extends JFrame {
         );
 
         panel.setBackground(Color.WHITE);
-
         panel.setBorder(
                 BorderFactory.createEmptyBorder(30, 20, 30, 20)
         );
 
-        // TITULO
         JLabel titulo = new JLabel("Eliminar vehículo");
         titulo.setFont(new Font("Arial", Font.BOLD, 20));
 
-        // CAMPOS
         JTextField campoPropietario = new JTextField();
         JTextField campoMatricula = new JTextField();
 
         limitarCampo(campoMatricula, 7, false);
 
-        // BOTON
         JButton botonEliminar =
                 new JButton("Eliminar vehículo");
 
-        // AÑADIR COMPONENTES
         panel.add(titulo);
-
         panel.add(new JLabel("Nombre del propietario:"));
         panel.add(campoPropietario);
-
         panel.add(new JLabel("Matrícula:"));
         panel.add(campoMatricula);
-
         panel.add(botonEliminar);
 
-        // ACCION PARA ELIMINAR
         botonEliminar.addActionListener(e -> {
 
             String propietario =
@@ -608,7 +598,6 @@ public class VentanaGrafica extends JFrame {
             String matricula =
                     campoMatricula.getText().trim();
 
-            // COMPROBAR CAMPOS VACIOS
             if (propietario.isEmpty() || matricula.isEmpty()) {
 
                 JOptionPane.showMessageDialog(
@@ -618,7 +607,6 @@ public class VentanaGrafica extends JFrame {
                 return;
             }
 
-            // ELIMINAR DE LA LISTA
             boolean eliminado =
                     lista.eliminar(propietario, matricula);
 
@@ -629,11 +617,8 @@ public class VentanaGrafica extends JFrame {
                         "Vehículo eliminado correctamente."
                 );
 
-                // ACTUALIZAR EL PANEL DERECHO
-                areaResultados.setText(lista.imprimirTodos());
-                areaResultados.setCaretPosition(0);
+                mostrarVehiculos(lista.obtenerTodos());
 
-                // LIMPIAR CAMPOS
                 campoPropietario.setText("");
                 campoMatricula.setText("");
 
@@ -646,7 +631,129 @@ public class VentanaGrafica extends JFrame {
             }
         });
 
-        // CONTENEDOR
+        JPanel contenedor = new JPanel(new BorderLayout());
+        contenedor.setBackground(Color.WHITE);
+        contenedor.add(panel, BorderLayout.NORTH);
+
+        return contenedor;
+    }
+
+    // =====================================
+    // BUSCAR POR NOMBRE
+    // =====================================
+
+    private JPanel crearPanelBuscarNombre() {
+
+        JPanel panel = new JPanel(
+                new GridLayout(0, 1, 10, 15)
+        );
+
+        panel.setBackground(Color.WHITE);
+        panel.setBorder(
+                BorderFactory.createEmptyBorder(30, 20, 30, 20)
+        );
+
+        JLabel titulo = new JLabel("Buscar por nombre");
+        titulo.setFont(new Font("Arial", Font.BOLD, 20));
+
+        JTextField campoNombre = new JTextField();
+        JButton botonBuscar = new JButton("Buscar vehículos");
+
+        panel.add(titulo);
+        panel.add(new JLabel("Nombre del vehículo:"));
+        panel.add(campoNombre);
+        panel.add(botonBuscar);
+
+        botonBuscar.addActionListener(e -> {
+
+            String nombre = campoNombre.getText().trim();
+
+            if (nombre.isEmpty()) {
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Introduce el nombre del vehículo."
+                );
+                return;
+            }
+
+            Transport[] vehiculos =
+                    lista.buscarPorNombre(nombre);
+
+            // SOLO MOSTRAR MATRICULAS
+            areaResultados.setText("");
+
+            if (vehiculos.length == 0) {
+                areaResultados.setText(
+                        "No se encontraron vehículos con ese nombre."
+                );
+            } else {
+
+                areaResultados.append(
+                        "Matrículas de " + nombre + ":\n\n"
+                );
+
+                for (Transport vehiculo : vehiculos) {
+                    areaResultados.append(
+                            vehiculo.getMatricula() + "\n"
+                    );
+                }
+            }
+
+            areaResultados.setCaretPosition(0);
+        });
+
+        JPanel contenedor = new JPanel(new BorderLayout());
+        contenedor.setBackground(Color.WHITE);
+        contenedor.add(panel, BorderLayout.NORTH);
+
+        return contenedor;
+    }
+
+    // =====================================
+    // BUSCAR POR PROPIETARIO
+    // =====================================
+
+    private JPanel crearPanelBuscarPropietario() {
+
+        JPanel panel = new JPanel(
+                new GridLayout(0, 1, 10, 15)
+        );
+
+        panel.setBackground(Color.WHITE);
+        panel.setBorder(
+                BorderFactory.createEmptyBorder(30, 20, 30, 20)
+        );
+
+        JLabel titulo = new JLabel("Buscar por propietario");
+        titulo.setFont(new Font("Arial", Font.BOLD, 20));
+
+        JTextField campoPropietario = new JTextField();
+        JButton botonBuscar = new JButton("Buscar vehículos");
+
+        panel.add(titulo);
+        panel.add(new JLabel("Nombre del propietario:"));
+        panel.add(campoPropietario);
+        panel.add(botonBuscar);
+
+        botonBuscar.addActionListener(e -> {
+
+            String propietario =
+                    campoPropietario.getText().trim();
+
+            if (propietario.isEmpty()) {
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Introduce el nombre del propietario."
+                );
+                return;
+            }
+
+            Transport[] vehiculos =
+                    lista.buscarPorPropietario(propietario);
+
+            mostrarVehiculos(vehiculos);
+        });
+
         JPanel contenedor = new JPanel(new BorderLayout());
         contenedor.setBackground(Color.WHITE);
         contenedor.add(panel, BorderLayout.NORTH);

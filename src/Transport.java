@@ -19,4 +19,14 @@
      abstract String getMatricula();
      public abstract String getnomVehicle();
      public abstract String getTraccio();
+
+     @Override
+     public String toString() {
+         return "Nombre: " + getnomVehicle() + "\n"
+                 + "Propietario: " + getPropietari() + "\n"
+                 + "Matrícula: " + getMatricula() + "\n"
+                 + "Velocidad máxima: " + getvelocitatMaxima() + " km/h\n"
+                 + "Número de plazas: " + getnumPlaces() + "\n"
+                 + "Tracción: " + getTraccio() + "\n";
+     }
 }

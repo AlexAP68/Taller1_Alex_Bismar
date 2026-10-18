@@ -47,4 +47,16 @@ public class TracMecAeri extends Aeri {
     public String getMatricula() {
         return matricula;
     }
+
+
+
+    @Override
+    public String toString() {
+        return super.toString()
+                + "Tipo: Aéreo\n"
+                + "Medio de circulación: " + getnomMedi() + "\n"
+                + "Cilindrada: " + getmotor().getCilindrada() + " cc\n"
+                + "Combustible: " + getmotor().getCombustible() + "\n";
+    }
+
 }

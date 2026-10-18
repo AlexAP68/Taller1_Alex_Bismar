@@ -41,4 +41,14 @@ public class TracNoMecMaritim extends Maritim {
     public String getMatricula() {
         return matricula;
     }
+
+
+
+    @Override
+    public String toString() {
+        return super.toString()
+                + "Tipo: Marítimo\n"
+                + "Medio de circulación: " + getnomMedi() + "\n";
+    }
+
 }

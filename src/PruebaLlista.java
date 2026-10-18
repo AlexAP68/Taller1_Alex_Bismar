@@ -37,7 +37,7 @@ public class PruebaLlista {
 
         // 5. Mostrar todos los vehículos
         System.out.println("=== TODOS LOS VEHICULOS ===");
-        lista.imprimirTodos();
+       // lista.imprimirTodos();
 
         // 6. Buscar vehículos de Pedro
         System.out.println("\n=== VEHICULOS DE PEDRO ===");
@@ -60,7 +60,7 @@ public class PruebaLlista {
 
         // 9. Comprobar la lista después de eliminar
         System.out.println("\n=== LISTA FINAL ===");
-        lista.imprimirTodos();
+      //  lista.imprimirTodos();
 
 
         System.out.println("\n=== PRUEBAS ESPECIALES ===");
@@ -68,7 +68,7 @@ public class PruebaLlista {
 // Eliminar el primer nodo
         System.out.println("Eliminar primer nodo:");
         System.out.println(lista.eliminar("Pedro", "1234ABC"));
-        lista.imprimirTodos();
+       // lista.imprimirTodos();
 
 // Eliminar un vehículo inexistente
         System.out.println("\nEliminar vehículo inexistente:");
@@ -77,7 +77,7 @@ public class PruebaLlista {
 // Eliminar el último vehículo
         System.out.println("\nEliminar último vehículo:");
         System.out.println(lista.eliminar("Pedro", "BICI001"));
-        lista.imprimirTodos();
+       // lista.imprimirTodos();
 
 // Intentar eliminar de una lista vacía
         System.out.println("\nEliminar de lista vacía:");

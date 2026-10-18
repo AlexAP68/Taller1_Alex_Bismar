@@ -1,10 +1,17 @@
+
 public class Llista implements Interface_llista {
 
+    // ATRIBUTOS
     private Nodo cabeza;
 
+    // CONSTRUCTOR
     public Llista() {
         cabeza = null;
     }
+
+    // =====================================
+    // INSERTAR VEHICULO
+    // =====================================
 
     @Override
     public void insertar(Transport vehiculo) {
@@ -15,6 +22,7 @@ public class Llista implements Interface_llista {
             cabeza = nuevo;
         }
         else {
+
             Nodo actual = cabeza;
 
             while (actual.getSiguiente() != null) {
@@ -24,6 +32,10 @@ public class Llista implements Interface_llista {
             actual.setSiguiente(nuevo);
         }
     }
+
+    // =====================================
+    // ELIMINAR VEHICULO
+    // =====================================
 
     @Override
     public boolean eliminar(String propietario, String matricula) {
@@ -40,7 +52,8 @@ public class Llista implements Interface_llista {
 
                 if (anterior == null) {
                     cabeza = actual.getSiguiente();
-                } else {
+                }
+                else {
                     anterior.setSiguiente(actual.getSiguiente());
                 }
 
@@ -54,156 +67,133 @@ public class Llista implements Interface_llista {
         return false;
     }
 
-    @Override
-    public String buscarPorNombre(String nombreVehiculo) {
-
-        StringBuilder resultado = new StringBuilder();
-
-        Nodo actual = cabeza;
-        int encontrados = 0;
-
-        while (actual != null) {
-
-            Transport vehiculo = actual.getDato();
-
-            if (vehiculo.getnomVehicle().equalsIgnoreCase(nombreVehiculo)) {
-
-                resultado.append(vehiculo.getMatricula()).append("\n");
-                encontrados++;
-            }
-
-            actual = actual.getSiguiente();
-        }
-
-        if (encontrados == 0) {
-            return "No se encontraron vehículos con ese nombre.";
-        }
-
-        return "Matrículas de " + nombreVehiculo + ":\n\n"
-                + resultado.toString();
-    }
+    // =====================================
+    // BUSCAR POR NOMBRE
+    // =====================================
 
     @Override
-    public void buscarPorPropietario(String propietario) {
+    public Transport[] buscarPorNombre(String nombreVehiculo) {
 
+        int cantidad = 0;
         Nodo actual = cabeza;
-        boolean encontrado = false;
 
+        // PRIMER RECORRIDO: CONTAR COINCIDENCIAS
         while (actual != null) {
 
             Transport vehiculo = actual.getDato();
 
-            if (vehiculo.getPropietari().equals(propietario)) {
+            if (vehiculo.getnomVehicle()
+                    .equalsIgnoreCase(nombreVehiculo)) {
 
-                encontrado = true;
-
-                System.out.println("Nombre: " + vehiculo.getnomVehicle());
-                System.out.println("Matricula: " + vehiculo.getMatricula());
-                System.out.println("Velocidad maxima: " + vehiculo.getvelocitatMaxima());
-                System.out.println("Numero de plazas: " + vehiculo.getnumPlaces());
-                System.out.println("Traccion: " + vehiculo.getTraccio());
-
-                if (vehiculo instanceof Terrestre) {
-                    System.out.println("Tipo: Terrestre");
-                }
-                else if (vehiculo instanceof Maritim) {
-                    System.out.println("Tipo: Maritimo");
-                }
-                else if (vehiculo instanceof Aeri) {
-                    System.out.println("Tipo: Aereo");
-                }
-
-                Motor motor = null;
-
-                if (vehiculo instanceof TracMec) {
-                    motor = ((TracMec) vehiculo).getmotor();
-                }
-                else if (vehiculo instanceof TracMecMaritim) {
-                    motor = ((TracMecMaritim) vehiculo).getmotor();
-                }
-                else if (vehiculo instanceof TracMecAeri) {
-                    motor = ((TracMecAeri) vehiculo).getmotor();
-                }
-
-                if (motor != null) {
-                    System.out.println("Cilindrada: " + motor.getCilindrada());
-                    System.out.println("Combustible: " + motor.getCombustible());
-                }
-
-                System.out.println("----------------------");
+                cantidad++;
             }
 
             actual = actual.getSiguiente();
         }
 
-        if (!encontrado) {
-            System.out.println("Este propietario no tiene vehiculos registrados.");
+        // CREAR ARRAY CON EL TAMAÑO NECESARIO
+        Transport[] resultado = new Transport[cantidad];
+
+        int i = 0;
+        actual = cabeza;
+
+        // SEGUNDO RECORRIDO: GUARDAR VEHICULOS
+        while (actual != null) {
+
+            Transport vehiculo = actual.getDato();
+
+            if (vehiculo.getnomVehicle()
+                    .equalsIgnoreCase(nombreVehiculo)) {
+
+                resultado[i] = vehiculo;
+                i++;
+            }
+
+            actual = actual.getSiguiente();
         }
+
+        return resultado;
     }
 
-    public String imprimirTodos() {
+    // =====================================
+    // BUSCAR POR PROPIETARIO
+    // =====================================
 
-        StringBuilder resultado = new StringBuilder();
+    @Override
+    public Transport[] buscarPorPropietario(String propietario) {
 
+        int cantidad = 0;
         Nodo actual = cabeza;
 
-        if (actual == null) {
-            return "No hay vehículos registrados.";
-        }
-
+        // PRIMER RECORRIDO: CONTAR COINCIDENCIAS
         while (actual != null) {
 
             Transport vehiculo = actual.getDato();
 
-            resultado.append("Nombre: ")
-                    .append(vehiculo.getnomVehicle()).append("\n");
+            if (vehiculo.getPropietari()
+                    .equalsIgnoreCase(propietario)) {
 
-            resultado.append("Propietario: ")
-                    .append(vehiculo.getPropietari()).append("\n");
-
-            resultado.append("Matrícula: ")
-                    .append(vehiculo.getMatricula()).append("\n");
-
-            resultado.append("Velocidad máxima: ")
-                    .append(vehiculo.getvelocitatMaxima()).append("\n");
-
-            resultado.append("Número de plazas: ")
-                    .append(vehiculo.getnumPlaces()).append("\n");
-
-            resultado.append("Tracción: ")
-                    .append(vehiculo.getTraccio()).append("\n");
-
-            if (vehiculo instanceof Terrestre) {
-                resultado.append("Tipo: Terrestre\n");
-            } else if (vehiculo instanceof Maritim) {
-                resultado.append("Tipo: Marítimo\n");
-            } else if (vehiculo instanceof Aeri) {
-                resultado.append("Tipo: Aéreo\n");
+                cantidad++;
             }
-
-            Motor motor = null;
-
-            if (vehiculo instanceof TracMec) {
-                motor = ((TracMec) vehiculo).getmotor();
-            } else if (vehiculo instanceof TracMecMaritim) {
-                motor = ((TracMecMaritim) vehiculo).getmotor();
-            } else if (vehiculo instanceof TracMecAeri) {
-                motor = ((TracMecAeri) vehiculo).getmotor();
-            }
-
-            if (motor != null) {
-                resultado.append("Cilindrada: ")
-                        .append(motor.getCilindrada()).append("\n");
-
-                resultado.append("Combustible: ")
-                        .append(motor.getCombustible()).append("\n");
-            }
-
-            resultado.append("--------------------------\n\n");
 
             actual = actual.getSiguiente();
         }
 
-        return resultado.toString();
+        // CREAR ARRAY CON EL TAMAÑO NECESARIO
+        Transport[] resultado = new Transport[cantidad];
+
+        int i = 0;
+        actual = cabeza;
+
+        // SEGUNDO RECORRIDO: GUARDAR VEHICULOS
+        while (actual != null) {
+
+            Transport vehiculo = actual.getDato();
+
+            if (vehiculo.getPropietari()
+                    .equalsIgnoreCase(propietario)) {
+
+                resultado[i] = vehiculo;
+                i++;
+            }
+
+            actual = actual.getSiguiente();
+        }
+
+        return resultado;
+    }
+
+    // =====================================
+    // OBTENER TODOS LOS VEHICULOS
+    // =====================================
+
+    @Override
+    public Transport[] obtenerTodos() {
+
+        int cantidad = 0;
+        Nodo actual = cabeza;
+
+        // PRIMER RECORRIDO: CONTAR VEHICULOS
+        while (actual != null) {
+            cantidad++;
+            actual = actual.getSiguiente();
+        }
+
+        // CREAR ARRAY
+        Transport[] resultado = new Transport[cantidad];
+
+        int i = 0;
+        actual = cabeza;
+
+        // SEGUNDO RECORRIDO: GUARDAR VEHICULOS
+        while (actual != null) {
+
+            resultado[i] = actual.getDato();
+
+            i++;
+            actual = actual.getSiguiente();
+        }
+
+        return resultado;
     }
 }

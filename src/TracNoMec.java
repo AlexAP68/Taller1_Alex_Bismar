@@ -41,4 +41,14 @@ public class TracNoMec extends Terrestre {
     public String getMatricula() {
         return matricula;
     }
+
+
+
+    @Override
+    public String toString() {
+        return super.toString()
+                + "Tipo: Terrestre\n"
+                + "Medio de circulación: " + getnomMedi() + "\n";
+    }
+
 }
