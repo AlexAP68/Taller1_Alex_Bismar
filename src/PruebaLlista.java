@@ -25,6 +25,11 @@ public class PruebaLlista {
                 "Carretera", "Bicicleta"
         );
 
+        Transport bis = new TracMecAeri(
+                300, 2, "AVION001", "Ana",
+                "Aire", motor1, "Avioneta"
+        );
+
         // 4. Insertar vehículos
         lista.insertar(coche1);
         lista.insertar(coche2);

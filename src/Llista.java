@@ -55,22 +55,32 @@ public class Llista implements Interface_llista {
     }
 
     @Override
-    public void buscarPorNombre(String nombreVehiculo) {
+    public String buscarPorNombre(String nombreVehiculo) {
+
+        StringBuilder resultado = new StringBuilder();
 
         Nodo actual = cabeza;
+        int encontrados = 0;
 
         while (actual != null) {
 
             Transport vehiculo = actual.getDato();
 
-            if (vehiculo.getnomVehicle().equals(nombreVehiculo)) {
+            if (vehiculo.getnomVehicle().equalsIgnoreCase(nombreVehiculo)) {
 
-                System.out.println(vehiculo.getMatricula());
-
+                resultado.append(vehiculo.getMatricula()).append("\n");
+                encontrados++;
             }
 
             actual = actual.getSiguiente();
         }
+
+        if (encontrados == 0) {
+            return "No se encontraron vehículos con ese nombre.";
+        }
+
+        return "Matrículas de " + nombreVehiculo + ":\n\n"
+                + resultado.toString();
     }
 
     @Override
@@ -131,57 +141,69 @@ public class Llista implements Interface_llista {
         }
     }
 
-    @Override
-    public void imprimirTodos() {
+    public String imprimirTodos() {
+
+        StringBuilder resultado = new StringBuilder();
 
         Nodo actual = cabeza;
 
-        if (cabeza == null) {
-            System.out.println("No hay vehículos registrados.");
-            return;
+        if (actual == null) {
+            return "No hay vehículos registrados.";
         }
 
         while (actual != null) {
 
             Transport vehiculo = actual.getDato();
 
-            System.out.println("Nombre: " + vehiculo.getnomVehicle());
-            System.out.println("Propietario: " + vehiculo.getPropietari());
-            System.out.println("Matrícula: " + vehiculo.getMatricula());
-            System.out.println("Velocidad máxima: " + vehiculo.getvelocitatMaxima());
-            System.out.println("Número de plazas: " + vehiculo.getnumPlaces());
-            System.out.println("Tracción: " + vehiculo.getTraccio());
+            resultado.append("Nombre: ")
+                    .append(vehiculo.getnomVehicle()).append("\n");
+
+            resultado.append("Propietario: ")
+                    .append(vehiculo.getPropietari()).append("\n");
+
+            resultado.append("Matrícula: ")
+                    .append(vehiculo.getMatricula()).append("\n");
+
+            resultado.append("Velocidad máxima: ")
+                    .append(vehiculo.getvelocitatMaxima()).append("\n");
+
+            resultado.append("Número de plazas: ")
+                    .append(vehiculo.getnumPlaces()).append("\n");
+
+            resultado.append("Tracción: ")
+                    .append(vehiculo.getTraccio()).append("\n");
 
             if (vehiculo instanceof Terrestre) {
-                System.out.println("Tipo: Terrestre");
-            }
-            else if (vehiculo instanceof Maritim) {
-                System.out.println("Tipo: Marítimo");
-            }
-            else if (vehiculo instanceof Aeri) {
-                System.out.println("Tipo: Aéreo");
+                resultado.append("Tipo: Terrestre\n");
+            } else if (vehiculo instanceof Maritim) {
+                resultado.append("Tipo: Marítimo\n");
+            } else if (vehiculo instanceof Aeri) {
+                resultado.append("Tipo: Aéreo\n");
             }
 
             Motor motor = null;
 
             if (vehiculo instanceof TracMec) {
                 motor = ((TracMec) vehiculo).getmotor();
-            }
-            else if (vehiculo instanceof TracMecMaritim) {
+            } else if (vehiculo instanceof TracMecMaritim) {
                 motor = ((TracMecMaritim) vehiculo).getmotor();
-            }
-            else if (vehiculo instanceof TracMecAeri) {
+            } else if (vehiculo instanceof TracMecAeri) {
                 motor = ((TracMecAeri) vehiculo).getmotor();
             }
 
             if (motor != null) {
-                System.out.println("Cilindrada: " + motor.getCilindrada());
-                System.out.println("Combustible: " + motor.getCombustible());
+                resultado.append("Cilindrada: ")
+                        .append(motor.getCilindrada()).append("\n");
+
+                resultado.append("Combustible: ")
+                        .append(motor.getCombustible()).append("\n");
             }
 
-            System.out.println("--------------------------");
+            resultado.append("--------------------------\n\n");
 
             actual = actual.getSiguiente();
         }
+
+        return resultado.toString();
     }
 }

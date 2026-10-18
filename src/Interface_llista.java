@@ -4,9 +4,9 @@ public interface Interface_llista {
 
     boolean eliminar(String propietario, String matricula);
 
-    void buscarPorNombre(String nombreVehiculo);
+    String buscarPorNombre(String nombreVehiculo);
 
     void buscarPorPropietario(String propietario);
 
-    void imprimirTodos();
+    String imprimirTodos();
 }
