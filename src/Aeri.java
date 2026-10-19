@@ -1,7 +1,7 @@
- abstract class Aeri extends Transport {
+public abstract class Aeri extends Transport {
 
-    String nomTipus = "Aeri";
-    String nomMedi;
+   protected String nomTipus = "Aerio";
+   protected String nomMedi;
 
     public Aeri(int velocitatMaxima, int numPlaces, String matricula, String nomPropietari, String medi) {
 

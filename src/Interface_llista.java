@@ -1,4 +1,3 @@
-
 public interface Interface_llista {
 
     // Insertar un vehículo en la lista

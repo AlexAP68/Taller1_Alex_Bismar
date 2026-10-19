@@ -1,6 +1,8 @@
+
+
 public class TracNoMec extends Terrestre {
 
-    String nomVehicle;
+    private String nomVehicle;
     private String traccio = "Traccio no mecanica";
 
     public TracNoMec(int velocitatMaxima, int numPlaces, String matricula, String nomPropietari,
@@ -47,7 +49,7 @@ public class TracNoMec extends Terrestre {
     @Override
     public String toString() {
         return super.toString()
-                + "Tipo: Terrestre\n"
+                + "Tipo: " + getnomTipus() + "\n"
                 + "Medio de circulación: " + getnomMedi() + "\n";
     }
 

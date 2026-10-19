@@ -1,6 +1,8 @@
+
+
 public class TracMecMaritim extends Maritim {
 
-    String nomVehicle;
+    private String nomVehicle;
     private Motor mot;
     private String traccio = "Traccio a motor";
 
@@ -51,7 +53,7 @@ public class TracMecMaritim extends Maritim {
     @Override
     public String toString() {
         return super.toString()
-                + "Tipo: Marítimo\n"
+                + "Tipo: " + getnomTipus() + "\n"
                 + "Medio de circulación: " + getnomMedi() + "\n"
                 + "Cilindrada: " + getmotor().getCilindrada() + " cc\n"
                 + "Combustible: " + getmotor().getCombustible() + "\n";

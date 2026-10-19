@@ -1,3 +1,5 @@
+
+
 public class Nodo {
 
     private Transport dato;
@@ -7,6 +9,8 @@ public class Nodo {
         this.dato = dato;
         this.siguiente = null;
     }
+
+
 
     public Transport getDato() {
         return dato;

@@ -1,8 +1,10 @@
+
+
 public class TracMec extends Terrestre {
 
-    String nomVehicle;
-    private Motor mot;
-    private String traccio = "Traccio a motor";
+   private String nomVehicle;
+   private Motor mot;
+   private String traccio = "Traccio a motor";
 
     public TracMec(int velocitatMaxima, int numPlaces, String matricula, String nomPropietari, String medi,
                    Motor m, String vehicle) {
@@ -54,7 +56,7 @@ public class TracMec extends Terrestre {
     @Override
     public String toString() {
         return super.toString()
-                + "Tipo: Terrestre\n"
+                + "Tipo: " + getnomTipus() + "\n"
                 + "Medio de circulación: " + getnomMedi() + "\n"
                 + "Cilindrada: " + mot.getCilindrada() + " cc\n"
                 + "Combustible: " + mot.getCombustible() + "\n";

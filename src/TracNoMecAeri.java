@@ -1,6 +1,6 @@
 public class TracNoMecAeri extends Aeri {
 
-    String nomVehicle;
+    private String nomVehicle;
     private String traccio = "Traccio no mecanica";
 
     public TracNoMecAeri(int velocitatMaxima, int numPlaces, String matricula, String nomPropietari, String medi,
@@ -47,7 +47,7 @@ public class TracNoMecAeri extends Aeri {
     @Override
     public String toString() {
         return super.toString()
-                + "Tipo: Aéreo\n"
+                + "Tipo: " + getnomTipus() + "\n"
                 + "Medio de circulación: " + getnomMedi() + "\n";
     }
 

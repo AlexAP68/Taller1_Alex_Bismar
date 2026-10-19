@@ -1,7 +1,7 @@
- abstract class Maritim extends Transport {
+public abstract class Maritim extends Transport {
 
-    String nomTipus = "Maritim";
-    String nomMedi;
+   protected String nomTipus = "Maritimo";
+   protected String nomMedi;
 
     public Maritim(int velocitatMaxima, int numPlaces, String matricula, String nomPropietari, String medi) {
 

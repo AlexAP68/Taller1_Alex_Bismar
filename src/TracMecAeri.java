@@ -1,8 +1,10 @@
+
+
 public class TracMecAeri extends Aeri {
 
-    String nomVehicle;
-    private Motor mot;
-    private String traccio = "Traccio a motor";
+   private String nomVehicle;
+   private Motor mot;
+   private String traccio = "Traccio a motor";
 
     public TracMecAeri(int velocitatMaxima, int numPlaces, String matricula, String nomPropietari, String medi,
                        Motor m, String vehicle) {
@@ -53,7 +55,7 @@ public class TracMecAeri extends Aeri {
     @Override
     public String toString() {
         return super.toString()
-                + "Tipo: Aéreo\n"
+                + "Tipo: " + getnomTipus() + "\n"
                 + "Medio de circulación: " + getnomMedi() + "\n"
                 + "Cilindrada: " + getmotor().getCilindrada() + " cc\n"
                 + "Combustible: " + getmotor().getCombustible() + "\n";

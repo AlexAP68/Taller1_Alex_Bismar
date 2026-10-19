@@ -1,7 +1,7 @@
 
 public class Llista implements Interface_llista {
 
-    // ATRIBUTOS
+    // Variables
     private Nodo cabeza;
 
     // CONSTRUCTOR
@@ -9,11 +9,9 @@ public class Llista implements Interface_llista {
         cabeza = null;
     }
 
-    // =====================================
-    // INSERTAR VEHICULO
-    // =====================================
+    // Insertamos vehiculo al final de la lista
 
-    @Override
+
     public void insertar(Transport vehiculo) {
 
         Nodo nuevo = new Nodo(vehiculo);
@@ -33,9 +31,7 @@ public class Llista implements Interface_llista {
         }
     }
 
-    // =====================================
-    // ELIMINAR VEHICULO
-    // =====================================
+    // Eliminamos un vehiculo por propietario y matricula
 
     @Override
     public boolean eliminar(String propietario, String matricula) {
@@ -67,9 +63,9 @@ public class Llista implements Interface_llista {
         return false;
     }
 
-    // =====================================
-    // BUSCAR POR NOMBRE
-    // =====================================
+
+    // Buscamos vehiculos por nombre
+
 
     @Override
     public Transport[] buscarPorNombre(String nombreVehiculo) {
@@ -77,7 +73,7 @@ public class Llista implements Interface_llista {
         int cantidad = 0;
         Nodo actual = cabeza;
 
-        // PRIMER RECORRIDO: CONTAR COINCIDENCIAS
+        // Contamos cuantos vehículos coinciden con el nombre
         while (actual != null) {
 
             Transport vehiculo = actual.getDato();
@@ -91,13 +87,13 @@ public class Llista implements Interface_llista {
             actual = actual.getSiguiente();
         }
 
-        // CREAR ARRAY CON EL TAMAÑO NECESARIO
+        // Creamos un array con el tamaño necesario
         Transport[] resultado = new Transport[cantidad];
 
         int i = 0;
         actual = cabeza;
 
-        // SEGUNDO RECORRIDO: GUARDAR VEHICULOS
+        //Buscamos los vehículos que coinciden con el nombre y los guardamos en el array
         while (actual != null) {
 
             Transport vehiculo = actual.getDato();
@@ -115,9 +111,9 @@ public class Llista implements Interface_llista {
         return resultado;
     }
 
-    // =====================================
-    // BUSCAR POR PROPIETARIO
-    // =====================================
+
+    // Buscamos vehiculos por propietario
+
 
     @Override
     public Transport[] buscarPorPropietario(String propietario) {
@@ -125,7 +121,7 @@ public class Llista implements Interface_llista {
         int cantidad = 0;
         Nodo actual = cabeza;
 
-        // PRIMER RECORRIDO: CONTAR COINCIDENCIAS
+        // Contamos cuantos vehículos coinciden con el propietario
         while (actual != null) {
 
             Transport vehiculo = actual.getDato();
@@ -139,13 +135,13 @@ public class Llista implements Interface_llista {
             actual = actual.getSiguiente();
         }
 
-        // CREAR ARRAY CON EL TAMAÑO NECESARIO
+        // Creamos un array con el tamaño necesario
         Transport[] resultado = new Transport[cantidad];
 
         int i = 0;
         actual = cabeza;
 
-        // SEGUNDO RECORRIDO: GUARDAR VEHICULOS
+        // Buscamos los vehículos que coinciden con el propietario y los guardamos en el array
         while (actual != null) {
 
             Transport vehiculo = actual.getDato();
@@ -163,9 +159,9 @@ public class Llista implements Interface_llista {
         return resultado;
     }
 
-    // =====================================
-    // OBTENER TODOS LOS VEHICULOS
-    // =====================================
+
+    // Obtenemos todos los vehiculos registrados
+
 
     @Override
     public Transport[] obtenerTodos() {
@@ -173,19 +169,19 @@ public class Llista implements Interface_llista {
         int cantidad = 0;
         Nodo actual = cabeza;
 
-        // PRIMER RECORRIDO: CONTAR VEHICULOS
+        // Contamos cuantos vehículos hay en la lista
         while (actual != null) {
             cantidad++;
             actual = actual.getSiguiente();
         }
 
-        // CREAR ARRAY
+        // Creamos un array con el tamaño necesario
         Transport[] resultado = new Transport[cantidad];
 
         int i = 0;
         actual = cabeza;
 
-        // SEGUNDO RECORRIDO: GUARDAR VEHICULOS
+        // Guardamos todos los vehículos en el array
         while (actual != null) {
 
             resultado[i] = actual.getDato();

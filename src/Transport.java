@@ -1,9 +1,9 @@
- abstract class Transport {
+public abstract class Transport {
 
-    int velocitatMaxima;
-    int numPlaces;
-    String matricula;
-    String nomPropietari;
+   protected int velocitatMaxima;
+   protected int numPlaces;
+   protected String matricula;
+   protected String nomPropietari;
 
     public Transport(int velocitatMaxima, int numPlaces, String matricula, String nomPropietari) {
 
@@ -13,12 +13,12 @@
         this.nomPropietari = nomPropietari;
     }
 
-     abstract int getvelocitatMaxima();
-     abstract int getnumPlaces();
-     abstract String getPropietari();
-     abstract String getMatricula();
-     public abstract String getnomVehicle();
-     public abstract String getTraccio();
+    public abstract int getvelocitatMaxima();
+    public abstract int getnumPlaces();
+    public abstract String getPropietari();
+    public abstract String getMatricula();
+    public abstract String getnomVehicle();
+    public abstract String getTraccio();
 
      @Override
      public String toString() {
